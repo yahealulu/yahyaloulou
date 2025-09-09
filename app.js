@@ -172,22 +172,7 @@ function initializeImageCarousels() {
     
     // Set up image click handler for modal
     carousel.addEventListener('click', () => {
-      const modal = document.createElement('div');
-      modal.className = 'modal';
-      
-      const modalImage = images[currentIndex].cloneNode();
-      modalImage.className = 'modal-image';
-      
-      const closeButton = document.createElement('button');
-      closeButton.className = 'close-modal';
-      closeButton.innerHTML = '×';
-      closeButton.onclick = () => modal.remove();
-      
-      modal.appendChild(modalImage);
-      modal.appendChild(closeButton);
-      document.body.appendChild(modal);
-      
-      setTimeout(() => modal.classList.add('active'), 10);
+      openModal(images, currentIndex);
     });
     
     function updateCarousel() {
@@ -202,6 +187,143 @@ function initializeImageCarousels() {
     
     updateCarousel();
   });
+}
+
+function openModal(images, startIndex) {
+  let currentModalIndex = startIndex;
+  
+  const modal = document.createElement('div');
+  modal.className = 'modal';
+  
+  const modalContainer = document.createElement('div');
+  modalContainer.className = 'modal-container';
+  
+  const modalImage = document.createElement('img');
+  modalImage.className = 'modal-image';
+  
+  // Create navigation buttons
+  const prevButton = document.createElement('button');
+  prevButton.className = 'modal-nav modal-prev';
+  prevButton.innerHTML = '‹';
+  prevButton.onclick = (e) => {
+    e.stopPropagation();
+    currentModalIndex = (currentModalIndex - 1 + images.length) % images.length;
+    updateModalImage();
+  };
+  
+  const nextButton = document.createElement('button');
+  nextButton.className = 'modal-nav modal-next';
+  nextButton.innerHTML = '›';
+  nextButton.onclick = (e) => {
+    e.stopPropagation();
+    currentModalIndex = (currentModalIndex + 1) % images.length;
+    updateModalImage();
+  };
+  
+  // Create image counter
+  const counter = document.createElement('div');
+  counter.className = 'modal-counter';
+  
+  // Create close button
+  const closeButton = document.createElement('button');
+  closeButton.className = 'close-modal';
+  closeButton.innerHTML = '×';
+  closeButton.onclick = () => {
+    modal.classList.remove('active');
+    setTimeout(() => modal.remove(), 300);
+  };
+  
+  function updateModalImage() {
+    modalImage.src = images[currentModalIndex].src;
+    modalImage.alt = images[currentModalIndex].alt;
+    counter.textContent = `${currentModalIndex + 1} / ${images.length}`;
+    
+    // Add smooth transition effect
+    modalImage.style.opacity = '0';
+    modalImage.style.transform = 'scale(0.9)';
+    
+    setTimeout(() => {
+      modalImage.style.opacity = '1';
+      modalImage.style.transform = 'scale(1)';
+    }, 150);
+  }
+  
+  // Hide navigation if only one image
+  if (images.length <= 1) {
+    prevButton.style.display = 'none';
+    nextButton.style.display = 'none';
+    counter.style.display = 'none';
+  }
+  
+  // Keyboard navigation
+  const keyHandler = (e) => {
+    if (e.key === 'Escape') {
+      closeButton.click();
+    } else if (e.key === 'ArrowLeft') {
+      prevButton.click();
+    } else if (e.key === 'ArrowRight') {
+      nextButton.click();
+    }
+  };
+  
+  document.addEventListener('keydown', keyHandler);
+  
+  // Touch/swipe navigation for mobile
+  let touchStartX = 0;
+  let touchEndX = 0;
+  
+  modalContainer.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  });
+  
+  modalContainer.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  });
+  
+  function handleSwipe() {
+    const swipeThreshold = 50;
+    const swipeDistance = touchEndX - touchStartX;
+    
+    if (Math.abs(swipeDistance) > swipeThreshold) {
+      if (swipeDistance > 0) {
+        // Swipe right - go to previous image
+        prevButton.click();
+      } else {
+        // Swipe left - go to next image
+        nextButton.click();
+      }
+    }
+  }
+  
+  // Close modal when clicking outside image
+  modal.onclick = (e) => {
+    if (e.target === modal) {
+      closeButton.click();
+    }
+  };
+  
+  // Remove keyboard listener when modal closes
+  const originalRemove = modal.remove.bind(modal);
+  modal.remove = () => {
+    document.removeEventListener('keydown', keyHandler);
+    originalRemove();
+  };
+  
+  modalContainer.appendChild(modalImage);
+  modalContainer.appendChild(prevButton);
+  modalContainer.appendChild(nextButton);
+  modalContainer.appendChild(counter);
+  
+  modal.appendChild(modalContainer);
+  modal.appendChild(closeButton);
+  document.body.appendChild(modal);
+  
+  // Initialize first image
+  updateModalImage();
+  
+  // Show modal with animation
+  setTimeout(() => modal.classList.add('active'), 10);
 }
 
 document.addEventListener('DOMContentLoaded', () => {

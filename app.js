@@ -121,9 +121,8 @@ function initializeProjects() {
           const firstProjectId = firstProjectTab.getAttribute('data-project');
           firstProjectTab.classList.add('active');
           
-          group.querySelectorAll('.project-detail').forEach(detail => {
-            detail.classList.toggle('active', detail.id === firstProjectId);
-          });
+          // Animate project details transition
+          showProjectWithAnimation(group, firstProjectId);
         } else {
           group.classList.remove('active');
         }
@@ -131,7 +130,7 @@ function initializeProjects() {
     });
   });
   
-  // Project tabs handling
+  // Project tabs handling with smooth animations
   projectTabs.forEach(tab => {
     tab.addEventListener('click', () => {
       const projectId = tab.getAttribute('data-project');
@@ -141,16 +140,52 @@ function initializeProjects() {
       group.querySelectorAll('.project-tab').forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
       
-      // Update project details
-      group.querySelectorAll('.project-detail').forEach(detail => {
-        detail.classList.toggle('active', detail.id === projectId);
-      });
-      
-      // Smooth scroll to the selected project
-      const selectedProject = document.getElementById(projectId);
-      selectedProject.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      // Animate project details transition
+      showProjectWithAnimation(group, projectId);
     });
   });
+}
+
+function showProjectWithAnimation(group, projectId) {
+  const currentActive = group.querySelector('.project-detail.active');
+  const newProject = group.querySelector(`#${projectId}`);
+  
+  if (currentActive === newProject) return;
+  
+  // Start transition out animation for current project
+  if (currentActive) {
+    currentActive.classList.add('transitioning-out');
+    
+    setTimeout(() => {
+      currentActive.classList.remove('active', 'transitioning-out');
+      currentActive.style.display = 'none';
+      
+      // Start transition in animation for new project
+      if (newProject) {
+        newProject.style.display = 'block';
+        newProject.classList.add('transitioning-in');
+        
+        setTimeout(() => {
+          newProject.classList.remove('transitioning-in');
+          newProject.classList.add('active');
+          
+          // Smooth scroll to the selected project
+          newProject.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 50);
+      }
+    }, 400);
+  } else {
+    // No current project, just show the new one
+    if (newProject) {
+      newProject.style.display = 'block';
+      newProject.classList.add('transitioning-in');
+      
+      setTimeout(() => {
+        newProject.classList.remove('transitioning-in');
+        newProject.classList.add('active');
+      }, 50);
+    }
+  }
 }
 
 function initializeImageCarousels() {

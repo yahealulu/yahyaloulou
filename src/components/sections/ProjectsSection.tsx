@@ -20,8 +20,6 @@ const ProjectsSection = () => {
   });
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const currentProjects = activeFramework === 'react' ? reactProjects : nextjsProjects;
-
   const handleFrameworkChange = (framework: FrameworkType) => {
     setActiveFramework(framework);
     // Reset scroll position when switching frameworks

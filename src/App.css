@@ -800,10 +800,42 @@ body, html {
   margin-bottom: 5px;
 }
 
+.resume-title-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  min-width: 0;
+  flex: 1;
+}
+
 .resume-header h4 {
   color: #ccd6f6;
   margin: 0;
   font-size: 1.1em;
+}
+
+.cert-link {
+  color: #64ffda;
+  font-size: 0.75em;
+  font-family: 'JetBrains Mono', monospace;
+  text-decoration: none;
+  border: 1px solid rgba(100, 255, 218, 0.35);
+  padding: 3px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.cert-link:hover {
+  background-color: rgba(100, 255, 218, 0.1);
+  border-color: #64ffda;
+  color: #a8f5e8;
+}
+
+.cert-link:focus-visible {
+  outline: 2px solid #64ffda;
+  outline-offset: 2px;
 }
 
 .resume-header .date {
@@ -824,6 +856,7 @@ body, html {
   font-size: 0.9em;
   line-height: 1.6;
   margin: 8px 0 0;
+  white-space: pre-line;
 }
 
 #resume .hex-content p,
@@ -1776,10 +1809,18 @@ body, html {
     flex: 1;
   }
 
+  .mobile-timeline-title-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+
   .mobile-timeline-title {
     color: #ccd6f6;
     font-size: 1em;
-    margin: 0 0 4px 0;
+    margin: 0;
     font-family: 'JetBrains Mono', monospace;
     font-weight: 600;
   }
@@ -1795,6 +1836,7 @@ body, html {
     font-size: 0.85em;
     line-height: 1.6;
     margin: 0;
+    white-space: pre-line;
   }
 
   /* Contact Grid */

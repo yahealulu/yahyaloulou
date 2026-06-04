@@ -30,7 +30,20 @@ const MobileResumeSection = () => {
             <div key={index} className="mobile-timeline-item">
               <div className="mobile-timeline-date">{edu.date}</div>
               <div className="mobile-timeline-content">
-                <h4 className="mobile-timeline-title">{edu.title}</h4>
+                <div className="mobile-timeline-title-row">
+                  <h4 className="mobile-timeline-title">{edu.title}</h4>
+                  {edu.url && (
+                    <a
+                      href={edu.url}
+                      className="cert-link"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`View certificate: ${edu.title}`}
+                    >
+                      View certificate
+                    </a>
+                  )}
+                </div>
                 <p className="mobile-timeline-institution">{edu.institution}</p>
               </div>
             </div>

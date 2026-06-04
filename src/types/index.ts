@@ -29,10 +29,11 @@ export interface Education {
   title: string;
   date: string;
   institution: string;
+  url?: string;
 }
 
 export interface ContactLink {
-  type: 'email' | 'github' | 'linkedin' | 'whatsapp';
+  type: 'email' | 'github' | 'whatsapp';
   label: string;
   url: string;
   displayText: string;
@@ -43,4 +44,3 @@ export interface ImageModalState {
   images: string[];
   currentIndex: number;
 }
-

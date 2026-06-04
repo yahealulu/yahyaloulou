@@ -4,10 +4,10 @@ const ResumeSection = () => {
   return (
     <>
       <h2>cat resume.txt</h2>
-      
+
       <div className="resume-section">
         <h3>Professional Experience</h3>
-        
+
         {experiences.map((exp, index) => (
           <div key={index} className="resume-item">
             <div className="resume-header">
@@ -22,11 +22,24 @@ const ResumeSection = () => {
 
       <div className="resume-section">
         <h3>Education & Certifications</h3>
-        
+
         {education.map((edu, index) => (
           <div key={index} className="resume-item">
             <div className="resume-header">
-              <h4>{edu.title}</h4>
+              <div className="resume-title-group">
+                <h4>{edu.title}</h4>
+                {edu.url && (
+                  <a
+                    href={edu.url}
+                    className="cert-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`View certificate: ${edu.title}`}
+                  >
+                    View certificate
+                  </a>
+                )}
+              </div>
               <span className="date">{edu.date}</span>
             </div>
             <div className="institution">{edu.institution}</div>
@@ -38,4 +51,3 @@ const ResumeSection = () => {
 };
 
 export default ResumeSection;
-

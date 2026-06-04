@@ -8,7 +8,7 @@ import ImageModal from '../projects/ImageModal';
 
 const ProjectsSection = () => {
   const [activeFramework, setActiveFramework] = useState<FrameworkType>('react');
-  const [activeProjectId, setActiveProjectId] = useState<string>('react4');
+  const [activeProjectId, setActiveProjectId] = useState<string>('react1');
   const [modalState, setModalState] = useState<{
     isOpen: boolean;
     images: string[];

@@ -2,6 +2,15 @@ import { Experience, Education } from '../types';
 
 export const experiences: Experience[] = [
   {
+    title: 'AI/RAG Systems Intern',
+    date: 'April 2026 - June 2026',
+    institution: 'Accordev AI, Damascus, Syria',
+    description:
+      '• Built a production RAG pipeline for "Syria Doctors" platform using real-world data, covering the full ML lifecycle: data collection, cleaning, chunking, and embedding with Google/HuggingFace models\n' +
+      '• Stored and queried vector embeddings using ChromaDB, integrated Groq LLM API for fast inference, achieving low-latency AI responses\n' +
+      '• Delivered a full-stack AI application with a React frontend and FastAPI backend, enabling users to query doctor data via natural language',
+  },
+  {
     title: 'Front-End Team Lead',
     date: 'October 2025 - April 2026',
     institution: 'Middle East, Beirut, Lebanon-USA',
